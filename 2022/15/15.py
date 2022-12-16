@@ -24,7 +24,7 @@ x2 = -999999999
 line = 2000000
 lines = []
 
-for i, (sx, sy, bx, by) in enumerate([[int(s) for s in re.findall(r'[\-\d]+', x)] for x in open('input.txt').readlines()]):
+for sx, sy, bx, by in [[int(s) for s in re.findall(r'[\-\d]+', x)] for x in open('input.txt').readlines()]:
     size = abs(sx - bx) + abs(sy - by)
     d = 0
 #    print('coords:', sy, sx, by, bx)
