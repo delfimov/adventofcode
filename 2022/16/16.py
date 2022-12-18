@@ -50,4 +50,4 @@ def search2(opened, rate, current_room, minutes, pressure, elephants_turn):
     return pressure
 
 # 307,76s user 0,48s system 99% cpu 5:08,31 total <-- MacBook Air M1 16/512
-print(search2(set(['AA']), 0, 'AA', 25, 0, False))
+# print(search2(set(['AA']), 0, 'AA', 25, 0, False))
