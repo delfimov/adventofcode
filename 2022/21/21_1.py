@@ -1,24 +1,13 @@
-monkeys = {}
-for (monkey,yell) in [list(map(str.strip, x.split(':'))) for x in open('input.txt').readlines()]:
-    monkeys[monkey] = yell
-    if monkeys[monkey].isnumeric():
-        monkeys[monkey] = int(yell)
-    else:
-        monkeys[monkey] = monkeys[monkey].split(' ')
 
-i = 0
-equal = monkeys['root']
-del monkeys['root']
-
-def solve():
+def solve(monkeys):
     while True:
         change = False
         for name in monkeys:
             if isinstance(monkeys[name], list):
-                if monkeys[name][0] != 'humn' and isinstance(monkeys[name][0], str) and isinstance(monkeys[monkeys[name][0]], int):
+                if monkeys[name][0] in monkeys and isinstance(monkeys[name][0], str) and isinstance(monkeys[monkeys[name][0]], int):
                     change = True
                     monkeys[name][0] = monkeys[monkeys[name][0]]
-                if monkeys[name][2] != 'humn' and isinstance(monkeys[name][2], str) and isinstance(monkeys[monkeys[name][2]], int):
+                if monkeys[name][2] in monkeys and  isinstance(monkeys[name][2], str) and isinstance(monkeys[monkeys[name][2]], int):
                     change = True
                     monkeys[name][2] = monkeys[monkeys[name][2]]
                 if isinstance(monkeys[name][0], int) and isinstance(monkeys[name][2], int):
@@ -26,6 +15,7 @@ def solve():
                     monkeys[name] = int(eval(f"{monkeys[name][0]} {monkeys[name][1]} {monkeys[name][2]}"))
         if not change:
             break
+    return monkeys
 
 def get_new_action(x, y, op, pos):
     if op == '/' and pos == 1:
@@ -41,7 +31,7 @@ def get_new_action(x, y, op, pos):
     elif op == '-' and pos == 2:
         return [y, '+', x]
     
-def reverse_solve():
+def reverse_solve(monkeys):
     new_monkeys = {}
     for name in monkeys:
         if isinstance(monkeys[name], list):
@@ -58,21 +48,27 @@ def reverse_solve():
             new_monkeys[name] = monkeys[name]
     return new_monkeys
 
+def get_monkeys(input_file):
+    monkeys = {}
+    for (monkey,yell) in [list(map(str.strip, x.split(':'))) for x in open(input_file).readlines()]:
+        monkeys[monkey] = yell
+        if monkeys[monkey].isnumeric():
+            monkeys[monkey] = int(yell)
+        else:
+            monkeys[monkey] = monkeys[monkey].split(' ')
+    return monkeys
 
-solve()
 
-del(monkeys['humn'])
+part1 = solve(get_monkeys('test.txt'))
+print('Part 1:', part1['root'])
 
-if isinstance(monkeys[equal[0]], int):
-    key = equal[2]
-    val = monkeys[equal[0]]
-else:
-    key = equal[0]
-    val = monkeys[equal[2]]
+part2 = get_monkeys('input.txt')
+del(part2['humn'])
+part2 = solve(part2)
+root = part2['root']
+del(part2['root'])
+part2 = reverse_solve(part2)
+part2[root[0]] = root[2]
+part2 = solve(part2)
 
-monkeys = reverse_solve()
-
-monkeys[key] = val
-solve()
-
-print(monkeys['humn'])
+print('Part 2:', part2['humn'])
