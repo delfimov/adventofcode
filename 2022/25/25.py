@@ -1,4 +1,3 @@
-import re
 snafu = [x.strip() for x in open('input.txt').readlines()]
 
 t = '=-012'
@@ -6,7 +5,7 @@ t = '=-012'
 def from_snafu(s):
     f = 0
     l = len(s)
-    for i, n in enumerate(re.findall("[\-\=\d]{1}", s)):
+    for i, n in enumerate(s):
         f += pow(5, l-i-1) * (t.find(n)-2)
     return f
 
