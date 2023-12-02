@@ -11,7 +11,6 @@ with open('1.txt') as file:
         for i, word in enumerate(s):
             for cube in cubes:
                 if cube == word:
-                    if int(s[i-1]) > cubes[cube]:
-                        cubes[cube] = int(s[i-1])
+                    cubes[cube] = max(cubes[cube], int(s[i-1]))
         sum += cubes['red']*cubes['green']*cubes['blue']
 print(sum)
