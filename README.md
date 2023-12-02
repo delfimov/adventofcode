@@ -1,6 +1,8 @@
-# Adventofcode 2022
+# Adventofcode 2022-2023
 
 https://adventofcode.com/2022
+
+https://adventofcode.com/2023
 
 Solutions in Python.
 
